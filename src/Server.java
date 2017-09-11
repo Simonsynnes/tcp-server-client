@@ -23,6 +23,7 @@ public class Server {
             //Reading from and writing to the socket
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
+                System.out.println(inputLine);
                 out.println(inputLine);
                 if (inputLine.equals("Bye."))
                     break;
