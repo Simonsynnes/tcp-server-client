@@ -25,8 +25,11 @@ public class Client {
                 String userInput;
                 while ((userInput = std.readLine()) != null) {
                     out.println("Knock, knock!\n");
-                    out.println(userInput);
-                    out.println("Simon");
+                    System.out.println(in.readLine());
+                    String username = "Simon";
+                    out.println(username);
+                    System.out.println(in.readLine());
+                    out.println(username + "who passed task 1");
 
                 }
             }
