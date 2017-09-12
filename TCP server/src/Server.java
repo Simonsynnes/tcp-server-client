@@ -12,10 +12,10 @@ public class Server {
         int portNumber = 5558;
 
         try (
-            ServerSocket server = new ServerSocket(portNumber); //Create socket object using port
-            Socket client = server.accept(); //Accept incoming client connection and return socket object
-            PrintWriter out = new PrintWriter(client.getOutputStream(), true); //Set output stream
-            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream())); //Set input stream
+                ServerSocket server = new ServerSocket(portNumber); //Create socket object using port
+                Socket client = server.accept(); //Accept incoming client connection and return socket object
+                PrintWriter out = new PrintWriter(client.getOutputStream(), true); //Set output stream
+                BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream())); //Set input stream
         ) {
             //Reading from and writing to the socket
             String inputLine;
@@ -30,12 +30,12 @@ public class Server {
 
             }
         } catch (IOException e) {
-                System.out.println("Exception caught when trying to listen on port" + portNumber +
-                        "or listening for a connection");
-                System.out.println(e.getMessage());
-            }
-
-
+            System.out.println("Exception caught when trying to listen on port" + portNumber +
+                    "or listening for a connection");
+            System.out.println(e.getMessage());
         }
 
+
     }
+
+}

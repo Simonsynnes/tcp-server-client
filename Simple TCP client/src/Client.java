@@ -6,18 +6,15 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
 
-        if (args.length != 2) {
-            System.err.println(
-                    "Usage: java EchoClient <host name> <port number>");
-            System.exit(1);
-        }
+
         //Hosting server on own computer
-        String hostName = "localhost";
+        String hostName ="localhost";
+        int portNumber = 5558;
 
         try {
-            Socket socket = new Socket(hostName, 5558);
+            Socket socket = new Socket(hostName, portNumber);
             //Setting output stream
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             //Setting input streams
@@ -27,8 +24,10 @@ public class Client {
                 //Track user input and print it
                 String userInput;
                 while ((userInput = std.readLine()) != null) {
+                    out.println("Knock, knock!\n");
                     out.println(userInput);
-                    System.out.println("echo: " + in.readLine());
+                    out.println("Simon");
+
                 }
             }
         } catch (UnknownHostException e) {
