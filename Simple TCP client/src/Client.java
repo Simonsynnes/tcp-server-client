@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client {
+
     public static void main(String[] args)  {
 
 
@@ -17,22 +18,19 @@ public class Client {
             Socket socket = new Socket(hostName, portNumber);
             //Setting output stream
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            //Setting input streams
+            //Setting input stream
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            //Reading user input
             BufferedReader std = new BufferedReader(new InputStreamReader(System.in));
             {
-                //Track user input and print it
-                String userInput;
-                while ((userInput = std.readLine()) != null) {
-                    out.println("Knock, knock!\n");
-                    System.out.println(in.readLine());
+                    out.println("Knock, knock!"); //Sending/writing information through socket
+                    System.out.println(in.readLine()); //Reading information from socket
                     String username = "Simon";
                     out.println(username);
                     System.out.println(in.readLine());
-                    out.println(username + "who passed task 1");
-
+                    out.println(username + " who passed task 1");
+                    System.out.println(in.readLine());
                 }
-            }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
             System.exit(1);

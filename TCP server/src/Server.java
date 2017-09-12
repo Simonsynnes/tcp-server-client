@@ -18,24 +18,40 @@ public class Server {
                 BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream())); //Set input stream
         ) {
             //Reading from and writing to the socket
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println(in.readLine());
-                out.println("Who's there?\n");
+                System.out.println(in.readLine()); //Reading information from socket
+            try {
+                Thread.sleep(3000); //Pause for 3 seconds
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+                out.println("Who's there?"); //Sending/writing information to socket
                 //Saving name as username
                 String username = in.readLine();
-                out.println(username + "who?\n");
-                System.out.println(in.readLine());
-                System.out.println("Congrats!\n");
-
+                System.out.println(username);
+            try {
+                Thread.sleep(3000);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
             }
-        } catch (IOException e) {
-            System.out.println("Exception caught when trying to listen on port" + portNumber +
-                    "or listening for a connection");
-            System.out.println(e.getMessage());
+                out.println(username + " who?");
+                System.out.println(in.readLine());
+            try {
+                Thread.sleep(3000);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+                out.println("Congrats!");
+            }
+
+            catch (IOException e) {
+                System.out.println("Exception caught when trying to listen on port "
+                        + portNumber + " or listening for a connection");
+                System.out.println(e.getMessage());
+            }
         }
 
 
-    }
+            }
 
-}
+
+
