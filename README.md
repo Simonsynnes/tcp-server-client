@@ -1,1 +1,1 @@
-dk2017-g22
+This is DataKomm 2017 assignment repo by group 22
