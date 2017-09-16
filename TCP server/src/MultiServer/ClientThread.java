@@ -1,13 +1,15 @@
+package MultiServer;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ServerThread implements Runnable {
+public class ClientThread implements Runnable {
         private Socket socket = null;
 
-        public ServerThread(Socket socket) {
+        public ClientThread(Socket socket) {
             this.socket = socket;
         }
 

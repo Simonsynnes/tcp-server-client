@@ -4,10 +4,15 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class Client {
 
+
+
     public static void main(String[] args)  {
+
+        Scanner reader = new Scanner(System.in);
 
 
         //Hosting server on own computer
@@ -23,7 +28,8 @@ public class Client {
             //Reading user input
             BufferedReader std = new BufferedReader(new InputStreamReader(System.in));
             {
-                    out.println("Knock, knock!"); //Sending/writing information through socket
+                    String text = reader.next();
+                    out.println(text); //Sending/writing information through socket
                     System.out.println(in.readLine()); //Reading information from socket
                     String username = "Simon";
                     out.println(username);

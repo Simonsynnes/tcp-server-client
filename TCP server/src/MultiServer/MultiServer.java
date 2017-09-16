@@ -1,3 +1,5 @@
+package MultiServer;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 
@@ -13,7 +15,7 @@ public class MultiServer {
             (ServerSocket server = new ServerSocket(portNumber)) {
                 while(listening)
 
-                { new Thread(new ServerThread(server.accept())).start(); //Accept incoming client connection and return socket object
+                { new Thread(new ClientThread(server.accept())).start(); //Accept incoming client connection and return socket object
                 }
         } catch (IOException e) {
             System.out.println("Exception caught when trying to listen on port "
