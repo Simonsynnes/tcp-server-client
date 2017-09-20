@@ -35,6 +35,23 @@ public class ChatServerThread extends Thread {
 
     public void run() {
         System.out.println("Server Thread " + ID + " running.");
+        loginPhase();
+        messagePhase();
+    }
+
+    public void loginPhase() {
+        while(true) {
+            try {
+                if(server.handleLogin(ID, streamIn.readUTF())) {
+                    break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void messagePhase() {
         while (true) {
             try {
                 server.handle(ID, streamIn.readUTF());
@@ -44,7 +61,6 @@ public class ChatServerThread extends Thread {
                 stop();
             }
         }
-
     }
 
     public void open() throws IOException {

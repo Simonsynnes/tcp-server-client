@@ -3,15 +3,18 @@ package ChatClientServer;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class ChatServer implements Runnable {
 
     private ChatServerThread clients[] = new ChatServerThread[50];
+    private HashMap<Integer, String> userNames = new HashMap<Integer, String>();
     private ServerSocket server = null;
     private boolean listening = true;
     private int clientCount = 0;
 
     public ChatServer(int port) {
+
         try {
             System.out.println("Binding to port " + port + ", please wait...");
             server = new ServerSocket(port);
@@ -24,7 +27,7 @@ public class ChatServer implements Runnable {
 
     public void run() {
         while (listening) {
-           try {
+            try {
                 System.out.println("Waiting for client...");
                 addThread(server.accept());
             } catch (IOException e) {
@@ -48,15 +51,22 @@ public class ChatServer implements Runnable {
         return -1;
     }
 
-    public synchronized  void handle(int ID, String input) {
-        if(input.equals(".bye")) {
+    public synchronized void handle(int ID, String input) {
+        if (input.equals(".bye")) {
             clients[findClient(ID)].send(".bye");
             remove(ID);
         } else {
+            String userName = userNames.get(ID);
             for (int i = 0; i < clientCount; i++) {
-                clients[i].send(ID + ": " + input);
+                clients[i].send(userName + ": " + input);
             }
         }
+    }
+
+    public synchronized boolean handleLogin(int ID, String input) {
+        String userName = input;
+        userNames.put(ID, input);
+        return true;
     }
 
     public synchronized void remove(int ID) {

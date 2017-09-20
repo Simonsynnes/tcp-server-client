@@ -7,6 +7,7 @@ public class ChatClientThread extends Thread {
     private Socket socket = null;
     private ChatClient client = null;
     private DataInputStream streamIn = null;
+    private boolean listening = true;
 
     public ChatClientThread (ChatClient client, Socket socket) {
         this.socket = socket;
@@ -27,13 +28,14 @@ public class ChatClientThread extends Thread {
     public void close() {
         try {
             if (streamIn != null) streamIn.close();
+            socket.close();
         } catch (IOException e) {
             System.out.println("Error closing input stream: " + e);
         }
     }
 
     public void run() {
-        while (true) {
+        while (listening) {
             try {
                 client.handle(streamIn.readUTF());
             } catch (IOException e) {
@@ -41,5 +43,9 @@ public class ChatClientThread extends Thread {
                 client.stop();
             }
         }
+    }
+
+    public void setListening(boolean value) {
+        listening = value;
     }
 }

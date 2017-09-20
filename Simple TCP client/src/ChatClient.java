@@ -3,7 +3,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-public class ChatClient implements Runnable {
+public class    ChatClient implements Runnable {
 
     private Socket socket = null;
     private Thread thread = null;
@@ -25,10 +25,34 @@ public class ChatClient implements Runnable {
     }
 
     public void run() {
+        String userName = null;
+        try {
+            userName = console.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            streamOut.writeUTF(userName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         while(thread != null) {
+
+            String userInput = null;
+
             try {
-                streamOut.writeUTF(console.readLine());
-                streamOut.flush();
+                userInput = console.readLine();
+            } catch (IOException e) {
+                break;
+            }
+            try {
+                if (userInput != null) {
+                    streamOut.writeUTF(userInput);
+                    streamOut.flush();
+                }
+
             } catch (IOException e) {
                 System.out.println("Sending error: " + e.getMessage());
                 stop();
@@ -56,15 +80,22 @@ public class ChatClient implements Runnable {
     }
 
     public void stop() {
+
+        client.setListening(false);
+
         try {
+            if (thread != null) thread = null;
             if (console != null) console.close();
             if (streamOut != null) streamOut.close();
             if (socket != null) socket.close();
         } catch (IOException e) {
             System.out.println("Error closing");
             client.close();
-            client.stop();
         }
+    }
+
+    public void setThread() {
+        thread = null;
     }
 
 
