@@ -58,7 +58,9 @@ public class ChatServer implements Runnable {
         } else {
             String userName = userNames.get(ID);
             for (int i = 0; i < clientCount; i++) {
-                clients[i].send(userName + ": " + input);
+                if(ID != clients[i].getID()) {
+                    clients[i].send(userName + ": " + input);
+                }
             }
         }
     }

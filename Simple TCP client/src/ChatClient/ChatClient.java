@@ -1,17 +1,22 @@
+package ChatClient;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 
-public class    ChatClient implements Runnable {
+public class ChatClient implements Runnable {
 
     private Socket socket = null;
     private Thread thread = null;
     private DataInputStream console = null;
     private DataOutputStream streamOut = null;
     private ChatClientThread client = null;
+    private ChatClientGUI GUI;
 
-    public ChatClient(String serverName, int serverPort) {
+    public ChatClient(String serverName, int serverPort, ChatClientGUI GUI) {
+
+        this.GUI = GUI;
+
         System.out.println("Establishing connection. Please wait...");
         try {
             socket = new Socket(serverName, serverPort);
@@ -25,38 +30,14 @@ public class    ChatClient implements Runnable {
     }
 
     public void run() {
-        String userName = null;
+
+    }
+
+    public void sendMessage(String msg) {
         try {
-            userName = console.readLine();
+            streamOut.writeUTF(msg);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-        try {
-            streamOut.writeUTF(userName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        while(thread != null) {
-
-            String userInput = null;
-
-            try {
-                userInput = console.readLine();
-            } catch (IOException e) {
-                break;
-            }
-            try {
-                if (userInput != null) {
-                    streamOut.writeUTF(userInput);
-                    streamOut.flush();
-                }
-
-            } catch (IOException e) {
-                System.out.println("Sending error: " + e.getMessage());
-                stop();
-            }
         }
     }
 
@@ -65,6 +46,7 @@ public class    ChatClient implements Runnable {
             System.out.println("Good bye. Press RETURN to exit...");
             stop();
         } else {
+            GUI.getMessage(msg);
             System.out.println(msg);
         }
     }
@@ -96,10 +78,5 @@ public class    ChatClient implements Runnable {
 
     public void setThread() {
         thread = null;
-    }
-
-
-    public static void main(String[] args)  {
-        ChatClient client = new ChatClient("localhost", 5558);
     }
 }
