@@ -2,7 +2,11 @@ package MathClientServer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-
+/*
+*  This class is responsible for listening for incoming connections
+*  If accepted, it returns a new socket
+*
+* */
 public class MathMultiServer {
 
     int port;

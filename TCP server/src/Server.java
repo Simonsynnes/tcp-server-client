@@ -4,7 +4,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+/*
+*  This class is responsible for  listening for a incoming connection (single-threaded).
+*
+* */
 public class Server {
     public static void main(String[] args) {
 
@@ -12,7 +15,7 @@ public class Server {
         int portNumber = 5558;
 
         try (
-                ServerSocket server = new ServerSocket(portNumber); //Create socket object using port
+                ServerSocket server = new ServerSocket(portNumber); //Create Server socket object using port
                 Socket client = server.accept(); //Accept incoming client connection and return socket object
                 PrintWriter out = new PrintWriter(client.getOutputStream(), true); //Set output stream
                 BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream())); //Set input stream

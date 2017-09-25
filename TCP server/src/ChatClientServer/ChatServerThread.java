@@ -3,7 +3,10 @@ package ChatClientServer;
 import java.io.*;
 import java.net.Socket;
 import java.util.regex.Pattern;
-
+/*
+*  This class is responsible for client interaction from the server side.
+*  It reads and writes messages from/to the client.
+* */
 public class ChatServerThread extends Thread {
 
     private Socket socket = null;
@@ -18,7 +21,7 @@ public class ChatServerThread extends Thread {
         this.socket = socket;
         ID = socket.getPort();
     }
-
+    //Writes messages to socket
     public void send(String msg) {
         try {
             streamOut.writeUTF(msg);
@@ -33,12 +36,14 @@ public class ChatServerThread extends Thread {
         return ID;
     }
 
+    //Main method
     public void run() {
         System.out.println("Server Thread " + ID + " running.");
         loginPhase();
         messagePhase();
     }
 
+    //Reads the input from socket and saves it as username
     public void loginPhase() {
         while(true) {
             try {
@@ -51,6 +56,7 @@ public class ChatServerThread extends Thread {
         }
     }
 
+    //Reads input from socket and sends it all connected clients
     public void messagePhase() {
         while (true) {
             try {
@@ -62,11 +68,13 @@ public class ChatServerThread extends Thread {
             }
         }
     }
-
+    //Opens input and output streams
     public void open() throws IOException {
         streamIn = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
         streamOut = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
     }
+
+    //Closes socket and streams
     public void close() throws IOException {
         if (socket != null) socket.close();
         if (streamIn != null) streamIn.close();

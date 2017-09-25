@@ -5,7 +5,9 @@ import ChatClient.ChatClient;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
-
+/*
+*  This class is responsible for listening for incoming messages, then returning them to the GUI
+* */
 public class ChatClientThread extends Thread {
 
     private Socket socket = null;
@@ -19,7 +21,7 @@ public class ChatClientThread extends Thread {
         open();
         start();
     }
-
+    //Creates new inputstream
     public void open() {
         try {
             streamIn = new DataInputStream(socket.getInputStream());
@@ -28,7 +30,7 @@ public class ChatClientThread extends Thread {
             client.stop();
         }
     }
-
+    //Closes new inputstream
     public void close() {
         try {
             if (streamIn != null) streamIn.close();
@@ -37,7 +39,7 @@ public class ChatClientThread extends Thread {
             System.out.println("Error closing input stream: " + e);
         }
     }
-
+    //Returns incoming messages to GUI
     public void run() {
         while (listening) {
             try {

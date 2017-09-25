@@ -2,7 +2,11 @@ package MultiServer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-
+/*
+*  This class is responsible for listening for incoming connections.
+*  If client is accepted, it returns a new thread and socket (ClientThread).
+*
+* */
 public class MultiServer {
 
     public static void main(String[] args) {

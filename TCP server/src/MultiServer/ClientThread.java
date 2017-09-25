@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
+/*
+*  This class is reponsible for communicating with the client from the server side.
+*
+* */
 public class ClientThread implements Runnable {
         private Socket socket = null;
 

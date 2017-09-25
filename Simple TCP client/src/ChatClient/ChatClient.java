@@ -3,7 +3,11 @@ package ChatClient;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
+/*
+*  This class is responsible for communicating with the server thread.
+*  It writes user input to the socket and sends it to the server.
+*
+* */
 public class ChatClient implements Runnable {
 
     private Socket socket = null;
@@ -19,7 +23,7 @@ public class ChatClient implements Runnable {
 
         System.out.println("Establishing connection. Please wait...");
         try {
-            socket = new Socket(serverName, serverPort);
+            socket = new Socket(serverName, serverPort); //Establishes connection to server
             System.out.println("Connected: " + socket);
             start();
         } catch (UnknownHostException uhe) {
@@ -32,7 +36,7 @@ public class ChatClient implements Runnable {
     public void run() {
 
     }
-
+    //Writes message to socket
     public void sendMessage(String msg) {
         try {
             streamOut.writeUTF(msg);
@@ -40,7 +44,7 @@ public class ChatClient implements Runnable {
             e.printStackTrace();
         }
     }
-
+    //Prints new messages to GUI
     public void handle(String msg) {
         if(msg.equals(".bye")) {
             System.out.println("Good bye. Press RETURN to exit...");
@@ -50,17 +54,18 @@ public class ChatClient implements Runnable {
             System.out.println(msg);
         }
     }
-
+    //Sets input and output streams
     public void start() throws IOException {
         console = new DataInputStream(System.in);
         streamOut = new DataOutputStream(socket.getOutputStream());
         if(thread == null) {
-            client = new ChatClientThread(this, socket);
+            client = new ChatClientThread(this, socket); //Creates new thread for listening for incoming messages
             thread = new Thread(this);
             thread.start();
         }
     }
 
+    //Closes input and output streams
     public void stop() {
 
         client.setListening(false);

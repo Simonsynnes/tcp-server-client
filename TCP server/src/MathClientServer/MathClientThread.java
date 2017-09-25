@@ -6,7 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.regex.Pattern;
-
+/*
+*  This class is responsible for handling calculations and writing results to the socket (client).
+*
+* */
 public class MathClientThread implements Runnable {
 
     private Socket socket;

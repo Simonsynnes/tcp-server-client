@@ -5,7 +5,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
-
+/*
+*  This class is responsible for handling user input and sending/receiving input through the socket.
+*
+* */
 public class Client {
 
 
