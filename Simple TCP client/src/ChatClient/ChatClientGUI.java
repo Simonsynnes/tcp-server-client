@@ -21,7 +21,7 @@ import javafx.scene.image.*;
 
 public class ChatClientGUI extends Application {
 
-    private VBox textOutputText;
+    private VBox textOutputField;
     private ScrollPane scrollPane;
     private ChatClient client;
     private TextField textInputField;
@@ -45,14 +45,16 @@ public class ChatClientGUI extends Application {
         inputField = new VBox();
         textInputField = new TextField();
         scrollPane = new ScrollPane();
-        textOutputText = new VBox();
+        textOutputField = new VBox();
 
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setHmax(400);
         scrollPane.setVmax(400);
 
-        textOutputText.setSpacing(5);
-        textOutputText.setPrefWidth(400);
+        textOutputField.setSpacing(5);
+        textOutputField.setPrefWidth(380);
+        textOutputField.setMaxWidth(380);
 
         Button likeBtn = new Button("Hello world!");
         Image like = new Image (ChatClient.class.getResourceAsStream("like.png"));
@@ -89,10 +91,11 @@ public class ChatClientGUI extends Application {
 
         renderScene();
 
-        scrollPane.setContent(textOutputText);
+        scrollPane.setContent(textOutputField);
 
         Scene scene = new Scene(borderPane, 400, 400);
         scene.getStylesheets().add(this.getClass().getResource("StyleSheet.css").toExternalForm());
+        scrollPane.setId("scrollPane");
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -108,6 +111,35 @@ public class ChatClientGUI extends Application {
                 }
             }
         });
+
+        newLogin();
+
+    }
+
+    public void newLogin() {
+        Stage loginStage = new Stage();
+        loginStage.setTitle("Login");
+        BorderPane bp = new BorderPane();
+        TextField tf = new TextField();
+
+        Button bt = new Button("Submit");
+        bt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String txt = tf.getText();
+                client.sendMessage(txt);
+                client.sendMessage(txt + " has just logged in");
+                ownMessage("Good day " + txt);
+                loginStage.close();
+            }
+        });
+
+        HBox hb = new HBox();
+        hb.getChildren().addAll(tf, bt);
+        bp.setCenter(hb);
+        loginStage.setScene(new Scene(bp, 250, 250));
+        loginStage.setResizable(false);
+        loginStage.show();
     }
 
     public void renderScene() {
@@ -116,33 +148,40 @@ public class ChatClientGUI extends Application {
     }
 
     public void getMessage(String msg) {
+        scrollPane.vvalueProperty().bind(textOutputField.heightProperty());
         Platform.runLater(() -> {
             if(msg.contains("(Y)")) {
                 Image like = new Image (ChatClient.class.getResourceAsStream("like.png"));
-                textOutputText.getChildren().add(new ImageView(like));
+                textOutputField.getChildren().add(new ImageView(like));
             } else {
                 Label txt = new Label(msg);
                 txt.getStyleClass().add("otherUsers");
-                textOutputText.getChildren().add(txt);
+                textOutputField.getChildren().add(txt);
             }
         });
     }
 
     public void ownMessage(String msg) {
+        scrollPane.vvalueProperty().bind(textOutputField.heightProperty());
         Platform.runLater(() -> {
             if(msg.contains("(Y)")) {
+                HBox hb = new HBox();
+                Pane spacer = new Pane();
+                //spacer.setStyle("-fx-background-color: rgb(0,0,0);");
+                HBox.setHgrow(spacer, Priority.ALWAYS);
                 Image like = new Image (ChatClient.class.getResourceAsStream("like.png"));
-                textOutputText.getChildren().add(new ImageView(like));
+                hb.getChildren().addAll(spacer, new ImageView(like));
+                textOutputField.getChildren().add(hb);
             } else {
 
                 HBox hb = new HBox();
                 Pane spacer = new Pane();
-                spacer.setStyle("-fx-background-color: rgb(0,0,0);");
+                //spacer.setStyle("-fx-background-color: rgb(0,0,0);");
                 HBox.setHgrow(spacer, Priority.ALWAYS);
                 Label txt = new Label(msg);
                 txt.getStyleClass().add("user");
                 hb.getChildren().addAll(spacer, txt);
-                textOutputText.getChildren().add(hb);
+                textOutputField.getChildren().add(hb);
             }
         });
     }
