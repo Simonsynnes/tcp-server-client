@@ -121,6 +121,8 @@ public class ChatClientGUI extends Application {
         loginStage.setTitle("Login");
         BorderPane bp = new BorderPane();
         TextField tf = new TextField();
+        Text t = new Text(10, 50, "Enter username:");
+        t.setFont(new Font(13));
 
         Button bt = new Button("Submit");
         bt.setOnAction(new EventHandler<ActionEvent>() {
@@ -143,10 +145,16 @@ public class ChatClientGUI extends Application {
             }
         });
 
+        Region rLeft = new Region();
+        Region rTop = new Region();
+        rLeft.setPrefWidth(30);
+        rTop.setPrefHeight(35);
         HBox hb = new HBox();
         hb.getChildren().addAll(tf, bt);
+        bp.setLeft(rLeft);
+        bp.setTop(rTop);
         bp.setCenter(hb);
-        loginStage.setScene(new Scene(bp, 250, 250));
+        loginStage.setScene(new Scene(bp, 250, 100));
         loginStage.setResizable(false);
         loginStage.show();
     }
