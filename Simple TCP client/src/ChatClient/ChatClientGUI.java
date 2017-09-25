@@ -53,10 +53,10 @@ public class ChatClientGUI extends Application {
         scrollPane.setVmax(400);
 
         textOutputField.setSpacing(5);
-        textOutputField.setPrefWidth(380);
-        textOutputField.setMaxWidth(380);
+        textOutputField.setPrefWidth(370);
+        textOutputField.setMaxWidth(370);
 
-        Button likeBtn = new Button("Hello world!");
+        Button likeBtn = new Button();
         Image like = new Image (ChatClient.class.getResourceAsStream("like.png"));
         likeBtn.setGraphic(new ImageView(like));
 
@@ -68,15 +68,15 @@ public class ChatClientGUI extends Application {
             }
         });
 
-        Button dislikeBtn = new Button("Hello world!");
+        Button dislikeBtn = new Button();
         Image dislike = new Image (ChatClient.class.getResourceAsStream("dislike.png"));
         dislikeBtn.setGraphic(new ImageView(dislike));
 
         dislikeBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                client.sendMessage("(Y)");
-                ownMessage("(Y)");
+                client.sendMessage("(N)");
+                ownMessage("(N)");
             }
         });
 
@@ -134,6 +134,15 @@ public class ChatClientGUI extends Application {
             }
         });
 
+        tf.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    bt.fire();
+                }
+            }
+        });
+
         HBox hb = new HBox();
         hb.getChildren().addAll(tf, bt);
         bp.setCenter(hb);
@@ -147,16 +156,26 @@ public class ChatClientGUI extends Application {
         borderPane.setBottom(inputField);
     }
 
-    public void getMessage(String msg) {
+    public void getMessage(String username, String msg) {
         scrollPane.vvalueProperty().bind(textOutputField.heightProperty());
         Platform.runLater(() -> {
             if(msg.contains("(Y)")) {
                 Image like = new Image (ChatClient.class.getResourceAsStream("like.png"));
                 textOutputField.getChildren().add(new ImageView(like));
+            } else if (msg.contains("(N)")) {
+                Image dislike = new Image (ChatClient.class.getResourceAsStream("dislike.png"));
+                textOutputField.getChildren().add(new ImageView(dislike));
             } else {
+                if(msg.length() > 12) {
+                    System.out.println("Message is too long");
+                }
                 Label txt = new Label(msg);
                 txt.getStyleClass().add("otherUsers");
-                textOutputField.getChildren().add(txt);
+                Text userName = new Text(username);
+                userName.getStyleClass().add("smallUserName");
+                VBox chatMessage = new VBox();
+                chatMessage.getChildren().addAll(userName, txt);
+                textOutputField.getChildren().add(chatMessage);
             }
         });
     }
@@ -164,12 +183,25 @@ public class ChatClientGUI extends Application {
     public void ownMessage(String msg) {
         scrollPane.vvalueProperty().bind(textOutputField.heightProperty());
         Platform.runLater(() -> {
+
+            if(msg.length() > 12) {
+                System.out.println("Message is too long");
+            }
+
             if(msg.contains("(Y)")) {
                 HBox hb = new HBox();
                 Pane spacer = new Pane();
                 //spacer.setStyle("-fx-background-color: rgb(0,0,0);");
                 HBox.setHgrow(spacer, Priority.ALWAYS);
                 Image like = new Image (ChatClient.class.getResourceAsStream("like.png"));
+                hb.getChildren().addAll(spacer, new ImageView(like));
+                textOutputField.getChildren().add(hb);
+            } else if(msg.contains("(N)")) {
+                HBox hb = new HBox();
+                Pane spacer = new Pane();
+                //spacer.setStyle("-fx-background-color: rgb(0,0,0);");
+                HBox.setHgrow(spacer, Priority.ALWAYS);
+                Image like = new Image (ChatClient.class.getResourceAsStream("dislike.png"));
                 hb.getChildren().addAll(spacer, new ImageView(like));
                 textOutputField.getChildren().add(hb);
             } else {

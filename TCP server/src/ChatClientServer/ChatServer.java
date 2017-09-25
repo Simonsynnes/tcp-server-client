@@ -64,7 +64,7 @@ public class ChatServer implements Runnable {
             String userName = userNames.get(ID); //Finds username through the HashMap.
             for (int i = 0; i < clientCount; i++) {
                 if(ID != clients[i].getID()) {
-                    clients[i].send(userName + ": " + input);
+                    clients[i].send(userName + "| " + input);
                 }
             }
         }

@@ -9,17 +9,29 @@ and open the template in the editor.
 */
 
 .otherUsers {
-    -fx-padding: 8px;
-    -fx-font-size: 18px;
-    -fx-background-color: red;
+    -fx-padding: 9px;
+    -fx-background-insets: 5px;
+    -fx-font-size: 16px;
+    -fx-background-color: rgb(222, 222, 222);
     -fx-border-radius: 15 15 15 15;
     -fx-background-radius: 15 15 15 15;
 }
 
 .user {
-    -fx-padding: 8px;
+    -fx-padding: 9px;
+    -fx-background-insets: 5px;
     -fx-font-size: 18px;
-    -fx-background-color: blue;
+    -fx-background-color: rgb(100, 200, 100);
     -fx-border-radius: 15 15 15 15;
     -fx-background-radius: 15 15 15 15;
+}
+
+.smallUserName {
+    -fx-font-size: 10px;
+    -fx-padding: 10 10 10 10;
+}
+
+#scrollPane {
+    -fx-font-size: 20px;
+    -fx-background-color: black;
 }

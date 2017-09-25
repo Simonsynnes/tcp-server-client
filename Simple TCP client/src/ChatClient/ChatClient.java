@@ -50,7 +50,8 @@ public class ChatClient implements Runnable {
             System.out.println("Good bye. Press RETURN to exit...");
             stop();
         } else {
-            GUI.getMessage(msg);
+            String[] txt = msg.split("\\|");
+            GUI.getMessage(txt[0], txt[1]);
             System.out.println(msg);
         }
     }
