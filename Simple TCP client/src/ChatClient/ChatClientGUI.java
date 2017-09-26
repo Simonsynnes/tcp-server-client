@@ -179,7 +179,7 @@ public class ChatClientGUI extends Application {
                 }
                 Label txt = new Label(msg);
                 txt.getStyleClass().add("otherUsers");
-                Text userName = new Text(username);
+                Label userName = new Label(username);
                 userName.getStyleClass().add("smallUserName");
                 VBox chatMessage = new VBox();
                 chatMessage.getChildren().addAll(userName, txt);
