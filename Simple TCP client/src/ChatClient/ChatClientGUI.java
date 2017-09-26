@@ -173,6 +173,9 @@ public class ChatClientGUI extends Application {
             } else if (msg.contains("(N)")) {
                 Image dislike = new Image (ChatClient.class.getResourceAsStream("dislike.png"));
                 textOutputField.getChildren().add(new ImageView(dislike));
+            } else if (msg.contains(":lul:")) {
+                Image lul = new Image (ChatClient.class.getResourceAsStream("lul.png"));
+                textOutputField.getChildren().add(new ImageView(lul));
             } else {
                 if(msg.length() > 12) {
                     System.out.println("Message is too long");
@@ -212,6 +215,9 @@ public class ChatClientGUI extends Application {
                 Image like = new Image (ChatClient.class.getResourceAsStream("dislike.png"));
                 hb.getChildren().addAll(spacer, new ImageView(like));
                 textOutputField.getChildren().add(hb);
+            } else if (msg.contains(":lul:")) {
+                Image lul = new Image (ChatClient.class.getResourceAsStream("lul.png"));
+                textOutputField.getChildren().add(new ImageView(lul));
             } else {
 
                 HBox hb = new HBox();
