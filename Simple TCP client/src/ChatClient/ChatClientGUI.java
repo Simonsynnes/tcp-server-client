@@ -216,8 +216,13 @@ public class ChatClientGUI extends Application {
                 hb.getChildren().addAll(spacer, new ImageView(like));
                 textOutputField.getChildren().add(hb);
             } else if (msg.contains(":lul:")) {
+                HBox hb = new HBox();
+                Pane spacer = new Pane();
+                //spacer.setStyle("-fx-background-color: rgb(0,0,0);");
+                HBox.setHgrow(spacer, Priority.ALWAYS);
                 Image lul = new Image (ChatClient.class.getResourceAsStream("lul.png"));
-                textOutputField.getChildren().add(new ImageView(lul));
+                hb.getChildren().addAll(spacer, new ImageView(lul));
+                textOutputField.getChildren().add(hb);
             } else {
 
                 HBox hb = new HBox();
